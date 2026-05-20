@@ -20,3 +20,4 @@ A Sudoku solver built with Python using recursive backtracking.
 
 ```bash
 python solver.py
+```
