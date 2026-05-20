@@ -1,3 +1,5 @@
+# solver.py
+
 import random
 
 
@@ -11,22 +13,22 @@ def find_empty(board):
 
 def is_valid(board, row, col, num):
 
-  # Row check
+  # row
   if num in board[row]:
     return False
 
-  # Column check
+  # col
   for i in range(9):
     if board[i][col] == num:
       return False
 
-  # 3x3 box check
-  box_row = (row // 3) * 3
-  box_col = (col // 3) * 3
+  # box
+  br = (row // 3) * 3
+  bc = (col // 3) * 3
 
-  for i in range(box_row, box_row + 3):
-    for j in range(box_col, box_col + 3):
-      if board[i][j] == num:
+  for r in range(br, br + 3):
+    for c in range(bc, bc + 3):
+      if board[r][c] == num:
         return False
 
   return True
@@ -35,24 +37,22 @@ def is_valid(board, row, col, num):
 def solve(board):
 
   empty = find_empty(board)
-
   if not empty:
     return True
 
-  row, col = empty
+  r, c = empty
 
   nums = list(range(1, 10))
-  random.shuffle(nums)   # IMPORTANT: makes generator work
+  random.shuffle(nums)
 
   for num in nums:
+    if is_valid(board, r, c, num):
 
-    if is_valid(board, row, col, num):
-
-      board[row][col] = num
+      board[r][c] = num
 
       if solve(board):
         return True
 
-      board[row][col] = 0
+      board[r][c] = 0
 
   return False

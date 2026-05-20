@@ -9,15 +9,12 @@ def empty_board():
   return [[0 for _ in range(9)] for _ in range(9)]
 
 
-# Generate a fully solved board
 def generate_full_board():
-
   board = empty_board()
   solve(board)
   return board
 
 
-# Count solutions (stop early if more than 1)
 def count_solutions(board):
 
   board = copy.deepcopy(board)
@@ -31,7 +28,6 @@ def count_solutions(board):
       return
 
     empty = None
-
     for r in range(9):
       for c in range(9):
         if b[r][c] == 0:
@@ -47,7 +43,6 @@ def count_solutions(board):
     r, c = empty
 
     for num in range(1, 10):
-
       if is_valid(b, r, c, num):
         b[r][c] = num
         backtrack(b)
@@ -70,7 +65,6 @@ def remove_numbers(board, removals):
     backup = board[r][c]
     board[r][c] = 0
 
-    # ensure unique solution
     if count_solutions(board) != 1:
       board[r][c] = backup
     else:
@@ -83,11 +77,9 @@ def generate_sudoku(difficulty="medium"):
 
   if difficulty == "easy":
     remove_numbers(board, 30)
-
   elif difficulty == "medium":
     remove_numbers(board, 40)
-
-  elif difficulty == "hard":
+  else:
     remove_numbers(board, 50)
 
   return board
